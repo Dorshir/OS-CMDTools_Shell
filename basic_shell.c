@@ -107,6 +107,8 @@ void execArgsPiped(char** parsed, char** parsedpipe)
 	}
 
 	if (p1 == 0) {
+
+		signal(SIGINT,sigint_handler);
 		// Child 1 executing..
 		// It only needs to write at the write end
 		close(pipefd[0]);
@@ -129,6 +131,8 @@ void execArgsPiped(char** parsed, char** parsedpipe)
 		// Child 2 executing..
 		// It only needs to read at the read end
 		if (p2 == 0) {
+
+			signal(SIGINT,sigint_handler);
 			close(pipefd[1]);
 			dup2(pipefd[0], STDIN_FILENO);
 			close(pipefd[0]);
@@ -148,7 +152,6 @@ void execArgsPiped(char** parsed, char** parsedpipe)
 void openHelp()
 {
 	puts("\n***WELCOME TO MY SHELL HELP***"
-		"\nCopyright @ Suprotik Dey"
 		"\n-Use the shell at your own risk..."
 		"\nList of Commands supported:"
 		"\n>cd"
