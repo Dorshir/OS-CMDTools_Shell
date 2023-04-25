@@ -73,12 +73,8 @@ void execArgs(char** parsed)
 	} else if (pid == 0) {
 		
     	signal(SIGINT,sigint_handler);
-		// if (execvp(parsed[0], parsed) < 0) {
-		// 	printf("\nCould not execute command..");
-		// }
-		for(;;){
-			printf("Just printing...");
-			sleep(1);
+		if (execvp(parsed[0], parsed) < 0) {
+			printf("\nCould not execute command..");
 		}
 		exit(0);
 	} else {
