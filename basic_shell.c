@@ -14,6 +14,8 @@
 // Clearing the shell using escape sequences
 #define clear() printf("\033[H\033[J")
 
+int ign;
+
 // Greeting shell during startup
 void init_shell()
 {
@@ -21,7 +23,6 @@ void init_shell()
 	printf("\n\n******************"
 		"************************");
 	printf("\n\n\n\t****MY SHELL****");
-	printf("\n\n\t-USE AT YOUR OWN RISK-");
 	printf("\n\n*******************"
 		"***********************");
 	char* username = getenv("USER");
@@ -54,10 +55,14 @@ void printDir()
 	printf("\nDir: %s", cwd);
 }
 
-// Signal handler
-void sigint_handler(int sig) {
+// Signal handler child
+void sigint_handler_c(int sig) {
   printf("Caught SIGINT signal in child process\n");
   exit(0);
+}
+
+void sigint_handler_p(int sig) {
+  ign = 1;
 }
 
 // Function where the system command is executed
@@ -72,7 +77,7 @@ void execArgs(char** parsed)
 		return;
 	} else if (pid == 0) {
 		
-    	signal(SIGINT,sigint_handler);
+    	signal(SIGINT,sigint_handler_c);
 		if (execvp(parsed[0], parsed) < 0) {
 			printf("\nCould not execute command..");
 		}
@@ -108,7 +113,7 @@ void execArgsPiped(char** parsed, char** parsedpipe)
 
 	if (p1 == 0) {
 
-		signal(SIGINT,sigint_handler);
+		signal(SIGINT,sigint_handler_c);
 		// Child 1 executing..
 		// It only needs to write at the write end
 		close(pipefd[0]);
@@ -132,7 +137,7 @@ void execArgsPiped(char** parsed, char** parsedpipe)
 		// It only needs to read at the read end
 		if (p2 == 0) {
 
-			signal(SIGINT,sigint_handler);
+			signal(SIGINT,sigint_handler_c);
 			close(pipefd[1]);
 			dup2(pipefd[0], STDIN_FILENO);
 			close(pipefd[0]);
@@ -269,8 +274,10 @@ int main()
 	int execFlag = 0;
 	init_shell();
 
-	signal(SIGINT, SIG_IGN); // ignore SIGINT at parent proccess
+	// ignore SIGINT at parent proccess
+	signal(SIGINT, sigint_handler_p);
 	while (1) {
+
 		// print shell line
 		printDir();
 		// take input
