@@ -85,7 +85,7 @@ void execArgs(char** parsed)
     	}
 		// // waiting for child to terminate
 		// wait(NULL);
-		return;
+		// return;
 	}
 }
 
@@ -266,6 +266,7 @@ int main()
 	int execFlag = 0;
 	init_shell();
 
+	signal(SIGINT, SIG_IGN); // ignore SIGINT at parent proccess
 	while (1) {
 		// print shell line
 		printDir();
