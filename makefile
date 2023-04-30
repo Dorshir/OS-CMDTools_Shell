@@ -30,3 +30,5 @@ libcodecB.so: codecB.c codecB.h
 
 clean:
 	rm -f copy cmp encode decode stshell libcodecA.so libcodecB.so *.o
+
+.DEFAULT_GOAL := all
