@@ -17,13 +17,13 @@ The programs in this project were developed and tested on Ubuntu 20.04 LTS.
 The `cmp` tool compares two files and returns an integer value. It supports the following flags:
 
 - `-v`: Print "equal" or "distinct" in addition to the integer value.
-- `-i`: Ignore case when comparing.
+- `-i`: Ignore uppder-case letters when comparing.
 
 #### Usage example
 
-
+```
 cmp <file1> <file2> -v
-
+```
 
 #### Output
 
@@ -38,9 +38,9 @@ The `copy` tool copies a file to another location or name. It returns an integer
 
 #### Usage example
 
-
+```
 copy <file1> <file2> -v
-
+```
 
 #### Output
 
@@ -59,9 +59,9 @@ Both libraries support "encode" and "decode" methods and are reversible.
 
 The `encode` tool utilizes the `codecA` or `codecB` library to encode a message. It supports the following usage:
 
-
+```
 encode <codecA/codecB> <message>
-
+```
 
 #### Output
 
@@ -71,9 +71,9 @@ The tool will output the encoded string.
 
 The `decode` tool utilizes the `codecA` or `codecB` library to decode a message. It supports the following usage:
 
-
+```
 decode <codec> <message>
-
+```
 
 #### Output
 
@@ -87,11 +87,11 @@ The tool will output the decoded string.
 
 Once you've started `stshell`, you can run Unix commands just like you would in a regular terminal. Here are some examples:
 
-
+```
 $ ls
 $ touch file.txt
 $ cd /path/to/directory
-
+```
 
 In addition to these basic commands, `stshell` also supports the following features:
 
@@ -99,19 +99,19 @@ In addition to these basic commands, `stshell` also supports the following featu
 
 You can use `>` and `>>` to redirect output to a file. For example:
 
-
+```
 $ ls > output.txt
 $ echo "Hello, world!" >> output.txt
-
+```
 
 #### Pipeline
 
 You can use the `|` symbol to pipeline commands. For example:
 
-
+```
 $ ls | grep "file"
 $ cat file.txt | grep "hello" | wc -l
-
+```
 
 #### Output
 
